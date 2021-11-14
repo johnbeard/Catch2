@@ -582,3 +582,240 @@ TEST_CASE( "The quantifier range matchers support types with different types ret
 }
 
 #endif
+
+namespace {
+    struct ConvertibleToBool
+    {
+        bool v;
+
+        explicit operator bool() const
+        {
+            return v;
+        }
+    };
+}
+
+namespace Catch {
+    template <>
+    struct StringMaker<ConvertibleToBool> {
+        static std::string
+        convert( ConvertibleToBool const& convertible_to_bool ) {
+            return ::Catch::Detail::stringify( convertible_to_bool.v );
+        }
+    };
+} // namespace Catch
+
+TEST_CASE("Usage of AllTrue range matcher", "[matchers][templated][quantifiers]") {
+    using Catch::Matchers::AllTrue;
+
+    SECTION( "Basic usage" ) {
+        SECTION( "All true evaluates to true" ) {
+            std::array<bool, 5> const data{ { true, true, true, true, true } };
+            REQUIRE_THAT( data, AllTrue() );
+        }
+        SECTION( "Empty evaluates to true" ) {
+            std::array<bool, 0> const data{};
+            REQUIRE_THAT( data, AllTrue() );
+        }
+        SECTION( "One false evalutes to false" ) {
+            std::array<bool, 5> const data{ { true, true, false, true, true } };
+            REQUIRE_THAT( data, !AllTrue() );
+        }
+        SECTION( "All false evaluates to false" ) {
+            std::array<bool, 5> const data{
+                { false, false, false, false, false } };
+            REQUIRE_THAT( data, !AllTrue() );
+        }
+    }
+
+    SECTION( "Contained type is convertible to bool" ) {
+        SECTION( "All true evaluates to true" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { true }, { true }, { true }, { true }, { true } } };
+            REQUIRE_THAT( data, AllTrue() );
+        }
+        SECTION( "One false evalutes to false" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { true }, { true }, { false }, { true }, { true } } };
+            REQUIRE_THAT( data, !AllTrue() );
+        }
+        SECTION( "All false evaluates to false" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { false }, { false }, { false }, { false }, { false } } };
+            REQUIRE_THAT( data, !AllTrue() );
+        }
+    }
+
+    SECTION( "Type requires ADL found begin and end" ) {
+        unrelated::needs_ADL_begin<bool, 5> const needs_adl{
+            true, true, true, true, true };
+        REQUIRE_THAT( needs_adl, AllTrue() );
+    }
+
+    SECTION( "Shortcircuiting" ) {
+        SECTION( "All are read" ) {
+            with_mocked_iterator_access<bool, 5> const mocked{
+                true, true, true, true, true };
+            REQUIRE_THAT( mocked, AllTrue() );
+            REQUIRE( mocked.m_derefed[0] );
+            REQUIRE( mocked.m_derefed[1] );
+            REQUIRE( mocked.m_derefed[2] );
+            REQUIRE( mocked.m_derefed[3] );
+            REQUIRE( mocked.m_derefed[4] );
+        }
+        SECTION( "Short-circuited" ) {
+            with_mocked_iterator_access<bool, 5> const mocked{
+                true, true, false, true, true };
+            REQUIRE_THAT( mocked, !AllTrue() );
+            REQUIRE( mocked.m_derefed[0] );
+            REQUIRE( mocked.m_derefed[1] );
+            REQUIRE( mocked.m_derefed[2] );
+            REQUIRE_FALSE( mocked.m_derefed[3] );
+            REQUIRE_FALSE( mocked.m_derefed[4] );
+        }
+    }
+}
+
+TEST_CASE( "Usage of NoneTrue range matcher", "[matchers][templated][quantifiers]" ) {
+    using Catch::Matchers::NoneTrue;
+
+    SECTION( "Basic usage" ) {
+        SECTION( "All true evaluates to false" ) {
+            std::array<bool, 5> const data{ { true, true, true, true, true } };
+            REQUIRE_THAT( data, !NoneTrue() );
+        }
+        SECTION( "Empty evaluates to true" ) {
+            std::array<bool, 0> const data{};
+            REQUIRE_THAT( data, NoneTrue() );
+        }
+        SECTION( "One true evalutes to false" ) {
+            std::array<bool, 5> const data{
+                { false, false, true, false, false } };
+            REQUIRE_THAT( data, !NoneTrue() );
+        }
+        SECTION( "All false evaluates to true" ) {
+            std::array<bool, 5> const data{
+                { false, false, false, false, false } };
+            REQUIRE_THAT( data, NoneTrue() );
+        }
+    }
+
+    SECTION( "Contained type is convertible to bool" ) {
+        SECTION( "All true evaluates to false" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { true }, { true }, { true }, { true }, { true } } };
+            REQUIRE_THAT( data, !NoneTrue() );
+        }
+        SECTION( "One true evalutes to false" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { false }, { false }, { true }, { false }, { false } } };
+            REQUIRE_THAT( data, !NoneTrue() );
+        }
+        SECTION( "All false evaluates to true" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { false }, { false }, { false }, { false }, { false } } };
+            REQUIRE_THAT( data, NoneTrue() );
+        }
+    }
+
+    SECTION( "Type requires ADL found begin and end" ) {
+        unrelated::needs_ADL_begin<bool, 5> const needs_adl{
+            false, false, false, false, false };
+        REQUIRE_THAT( needs_adl, NoneTrue() );
+    }
+
+    SECTION( "Shortcircuiting" ) {
+        SECTION( "All are read" ) {
+            with_mocked_iterator_access<bool, 5> const mocked{
+                false, false, false, false, false };
+            REQUIRE_THAT( mocked, NoneTrue() );
+            REQUIRE( mocked.m_derefed[0] );
+            REQUIRE( mocked.m_derefed[1] );
+            REQUIRE( mocked.m_derefed[2] );
+            REQUIRE( mocked.m_derefed[3] );
+            REQUIRE( mocked.m_derefed[4] );
+        }
+        SECTION( "Short-circuited" ) {
+            with_mocked_iterator_access<bool, 5> const mocked{
+                false, false, true, true, true };
+            REQUIRE_THAT( mocked, !NoneTrue() );
+            REQUIRE( mocked.m_derefed[0] );
+            REQUIRE( mocked.m_derefed[1] );
+            REQUIRE( mocked.m_derefed[2] );
+            REQUIRE_FALSE( mocked.m_derefed[3] );
+            REQUIRE_FALSE( mocked.m_derefed[4] );
+        }
+    }
+}
+
+TEST_CASE( "Usage of AnyTrue range matcher", "[matchers][templated][quantifiers]" ) {
+    using Catch::Matchers::AnyTrue;
+
+    SECTION( "Basic usage" ) {
+        SECTION( "All true evaluates to true" ) {
+            std::array<bool, 5> const data{ { true, true, true, true, true } };
+            REQUIRE_THAT( data, AnyTrue() );
+        }
+        SECTION( "Empty evaluates to false" ) {
+            std::array<bool, 0> const data{};
+            REQUIRE_THAT( data, !AnyTrue() );
+        }
+        SECTION( "One true evalutes to true" ) {
+            std::array<bool, 5> const data{
+                { false, false, true, false, false } };
+            REQUIRE_THAT( data, AnyTrue() );
+        }
+        SECTION( "All false evaluates to false" ) {
+            std::array<bool, 5> const data{
+                { false, false, false, false, false } };
+            REQUIRE_THAT( data, !AnyTrue() );
+        }
+    }
+
+    SECTION( "Contained type is convertible to bool" ) {
+        SECTION( "All true evaluates to true" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { true }, { true }, { true }, { true }, { true } } };
+            REQUIRE_THAT( data, AnyTrue() );
+        }
+        SECTION( "One true evalutes to true" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { false }, { false }, { true }, { false }, { false } } };
+            REQUIRE_THAT( data, AnyTrue() );
+        }
+        SECTION( "All false evaluates to false" ) {
+            std::array<ConvertibleToBool, 5> const data{
+                { { false }, { false }, { false }, { false }, { false } } };
+            REQUIRE_THAT( data, !AnyTrue() );
+        }
+    }
+
+    SECTION( "Type requires ADL found begin and end" ) {
+        unrelated::needs_ADL_begin<bool, 5> const needs_adl{
+            false, false, true, false, false };
+        REQUIRE_THAT( needs_adl, AnyTrue() );
+    }
+
+    SECTION( "Shortcircuiting" ) {
+        SECTION( "All are read" ) {
+            with_mocked_iterator_access<bool, 5> const mocked{
+                false, false, false, false, true };
+            REQUIRE_THAT( mocked, AnyTrue() );
+            REQUIRE( mocked.m_derefed[0] );
+            REQUIRE( mocked.m_derefed[1] );
+            REQUIRE( mocked.m_derefed[2] );
+            REQUIRE( mocked.m_derefed[3] );
+            REQUIRE( mocked.m_derefed[4] );
+        }
+        SECTION( "Short-circuited" ) {
+            with_mocked_iterator_access<bool, 5> const mocked{
+                false, false, true, true, true };
+            REQUIRE_THAT( mocked, AnyTrue() );
+            REQUIRE( mocked.m_derefed[0] );
+            REQUIRE( mocked.m_derefed[1] );
+            REQUIRE( mocked.m_derefed[2] );
+            REQUIRE_FALSE( mocked.m_derefed[3] );
+            REQUIRE_FALSE( mocked.m_derefed[4] );
+        }
+    }
+}
