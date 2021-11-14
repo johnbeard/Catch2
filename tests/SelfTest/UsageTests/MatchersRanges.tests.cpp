@@ -58,22 +58,23 @@ namespace unrelated {
 #  pragma clang diagnostic ignored "-Wunused-function"
 #endif
 
+template <typename T, std::size_t N>
 class has_different_begin_end_types {
-    std::array<int, 5> elements{ {1, 2, 3, 4, 5} };
+    std::array<T, N> m_elements;
 
     // Different type for the "end" iterator
     struct iterator_end {};
     // Just a fake forward iterator, that only compares to a different
     // type (so we can test two-type ranges).
     struct iterator {
-        int const* start;
-        int const* end;
+        T const* start;
+        T const* end;
 
         using iterator_category = std::forward_iterator_tag;
         using difference_type = std::ptrdiff_t;
-        using value_type = int;
-        using reference = int const&;
-        using pointer = int const*;
+        using value_type = T;
+        using reference = T const&;
+        using pointer = T const*;
 
 
         friend bool operator==( iterator iter, iterator_end ) {
@@ -101,8 +102,12 @@ class has_different_begin_end_types {
 
 
 public:
+    template <typename... Args>
+    explicit has_different_begin_end_types( Args&&... args ):
+        m_elements{ make_array( CATCH_FORWARD( args )... ) } {}
+
     iterator begin() const {
-        return { elements.data(), elements.data() + elements.size() };
+        return { m_elements.data(), m_elements.data() + m_elements.size() };
     }
 
     iterator_end end() const {
@@ -554,35 +559,6 @@ TEST_CASE("Usage of NoneMatch range matcher", "[matchers][templated][quantifiers
     }
 }
 
-
-// This is a C++17 extension, and GCC refuses to compile such code
-// unless it is set to C++17 or later
-#if defined(CATCH_CPP17_OR_GREATER)
-
-TEST_CASE( "The quantifier range matchers support types with different types returned from begin and end",
-           "[matchers][templated][quantifiers][approvals]" ) {
-    using Catch::Matchers::AllMatch;
-    using Catch::Matchers::AnyMatch;
-    using Catch::Matchers::NoneMatch;
-
-    using Catch::Matchers::Predicate;
-
-    has_different_begin_end_types diff_types;
-    REQUIRE_THAT( diff_types, !AllMatch( Predicate<int>( []( int elem ) {
-                      return elem < 3;
-                  } ) ) );
-
-    REQUIRE_THAT( diff_types, AnyMatch( Predicate<int>( []( int elem ) {
-                      return elem < 2;
-                  } ) ) );
-
-    REQUIRE_THAT( diff_types, !NoneMatch( Predicate<int>( []( int elem ) {
-                      return elem < 3;
-                  } ) ) );
-}
-
-#endif
-
 namespace {
     struct ConvertibleToBool
     {
@@ -819,3 +795,45 @@ TEST_CASE( "Usage of AnyTrue range matcher", "[matchers][templated][quantifiers]
         }
     }
 }
+
+// This is a C++17 extension, and GCC refuses to compile such code
+// unless it is set to C++17 or later
+#if defined(CATCH_CPP17_OR_GREATER)
+
+TEST_CASE( "The quantifier range matchers support types with different types returned from begin and end",
+           "[matchers][templated][quantifiers][approvals]" ) {
+    using Catch::Matchers::AllMatch;
+    using Catch::Matchers::AllTrue;
+    using Catch::Matchers::AnyMatch;
+    using Catch::Matchers::AnyTrue;
+    using Catch::Matchers::NoneMatch;
+    using Catch::Matchers::NoneTrue;
+
+    using Catch::Matchers::Predicate;
+
+    SECTION( "AllAnyNoneMatch" ) {
+        has_different_begin_end_types<int, 5> diff_types{ 1, 2, 3, 4, 5 };
+        REQUIRE_THAT( diff_types, !AllMatch( Predicate<int>( []( int elem ) {
+                          return elem < 3;
+                      } ) ) );
+
+        REQUIRE_THAT( diff_types, AnyMatch( Predicate<int>( []( int elem ) {
+                          return elem < 2;
+                      } ) ) );
+
+        REQUIRE_THAT( diff_types, !NoneMatch( Predicate<int>( []( int elem ) {
+                          return elem < 3;
+                      } ) ) );
+    }
+    SECTION( "AllAnyNoneTrue" ) {
+        has_different_begin_end_types<bool, 5> diff_types{
+            false, false, true, false, false };
+        REQUIRE_THAT( diff_types, !AllTrue() );
+
+        REQUIRE_THAT( diff_types, AnyTrue() );
+
+        REQUIRE_THAT( diff_types, !NoneTrue() );
+    }
+}
+
+#endif
