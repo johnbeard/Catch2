@@ -16356,7 +16356,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[0]
+            mocked.m_derefed[0]
           </Original>
           <Expanded>
             true
@@ -16364,7 +16364,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[1]
+            mocked.m_derefed[1]
           </Original>
           <Expanded>
             true
@@ -16372,7 +16372,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[2]
+            mocked.m_derefed[2]
           </Original>
           <Expanded>
             true
@@ -16380,7 +16380,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[3]
+            mocked.m_derefed[3]
           </Original>
           <Expanded>
             true
@@ -16388,7 +16388,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[4]
+            mocked.m_derefed[4]
           </Original>
           <Expanded>
             true
@@ -16410,7 +16410,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[0]
+            mocked.m_derefed[0]
           </Original>
           <Expanded>
             true
@@ -16418,7 +16418,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[1]
+            mocked.m_derefed[1]
           </Original>
           <Expanded>
             true
@@ -16426,7 +16426,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[2]
+            mocked.m_derefed[2]
           </Original>
           <Expanded>
             true
@@ -16434,7 +16434,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[3])
+            !(mocked.m_derefed[3])
           </Original>
           <Expanded>
             !false
@@ -16442,7 +16442,227 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[4])
+            !(mocked.m_derefed[4])
+          </Original>
+          <Expanded>
+            !false
+          </Expanded>
+        </Expression>
+        <OverallResults successes="6" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="6" failures="0" expectedFailures="0"/>
+    </Section>
+    <OverallResult success="true"/>
+  </TestCase>
+  <TestCase name="Usage of AllTrue range matcher" tags="[matchers][quantifiers][templated]" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All true evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, AllTrue()
+          </Original>
+          <Expanded>
+            { true, true, true, true, true } contains only true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="Empty evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, AllTrue()
+          </Original>
+          <Expanded>
+            {  } contains only true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="One false evalutes to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !AllTrue()
+          </Original>
+          <Expanded>
+            { true, true, false, true, true } not contains only true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All false evaluates to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !AllTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, false } not contains only true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All true evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, AllTrue()
+          </Original>
+          <Expanded>
+            { true, true, true, true, true } contains only true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="One false evalutes to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !AllTrue()
+          </Original>
+          <Expanded>
+            { true, true, false, true, true } not contains only true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All false evaluates to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !AllTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, false } not contains only true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Type requires ADL found begin and end" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Original>
+          needs_adl, AllTrue()
+        </Original>
+        <Expanded>
+          { true, true, true, true, true } contains only true
+        </Expanded>
+      </Expression>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Shortcircuiting" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All are read" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked, AllTrue()
+          </Original>
+          <Expanded>
+            { true, true, true, true, true } contains only true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[0]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[1]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[2]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[3]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[4]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="6" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="6" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Shortcircuiting" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="Short-circuited" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked, !AllTrue()
+          </Original>
+          <Expanded>
+            { true, true, false, true, true } not contains only true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[0]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[1]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[2]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            !(mocked.m_derefed[3])
+          </Original>
+          <Expanded>
+            !false
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            !(mocked.m_derefed[4])
           </Original>
           <Expanded>
             !false
@@ -16497,7 +16717,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[0]
+            mocked.m_derefed[0]
           </Original>
           <Expanded>
             true
@@ -16505,7 +16725,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[1]
+            mocked.m_derefed[1]
           </Original>
           <Expanded>
             true
@@ -16513,7 +16733,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[2]
+            mocked.m_derefed[2]
           </Original>
           <Expanded>
             true
@@ -16521,7 +16741,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[3]
+            mocked.m_derefed[3]
           </Original>
           <Expanded>
             true
@@ -16529,7 +16749,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[4]
+            mocked.m_derefed[4]
           </Original>
           <Expanded>
             true
@@ -16551,7 +16771,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[0]
+            mocked.m_derefed[0]
           </Original>
           <Expanded>
             true
@@ -16559,7 +16779,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[1])
+            !(mocked.m_derefed[1])
           </Original>
           <Expanded>
             !false
@@ -16567,7 +16787,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[2])
+            !(mocked.m_derefed[2])
           </Original>
           <Expanded>
             !false
@@ -16575,7 +16795,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[3])
+            !(mocked.m_derefed[3])
           </Original>
           <Expanded>
             !false
@@ -16583,7 +16803,227 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[4])
+            !(mocked.m_derefed[4])
+          </Original>
+          <Expanded>
+            !false
+          </Expanded>
+        </Expression>
+        <OverallResults successes="6" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="6" failures="0" expectedFailures="0"/>
+    </Section>
+    <OverallResult success="true"/>
+  </TestCase>
+  <TestCase name="Usage of AnyTrue range matcher" tags="[matchers][quantifiers][templated]" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All true evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, AnyTrue()
+          </Original>
+          <Expanded>
+            { true, true, true, true, true } contains at least one true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="Empty evaluates to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !AnyTrue()
+          </Original>
+          <Expanded>
+            {  } not contains at least one true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="One true evalutes to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, AnyTrue()
+          </Original>
+          <Expanded>
+            { false, false, true, false, false } contains at least one true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All false evaluates to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !AnyTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, false } not contains at least one true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All true evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, AnyTrue()
+          </Original>
+          <Expanded>
+            { true, true, true, true, true } contains at least one true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="One true evalutes to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, AnyTrue()
+          </Original>
+          <Expanded>
+            { false, false, true, false, false } contains at least one true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All false evaluates to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !AnyTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, false } not contains at least one true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Type requires ADL found begin and end" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Original>
+          needs_adl, AnyTrue()
+        </Original>
+        <Expanded>
+          { false, false, true, false, false } contains at least one true
+        </Expanded>
+      </Expression>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Shortcircuiting" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All are read" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked, AnyTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, true } contains at least one true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[0]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[1]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[2]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[3]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[4]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="6" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="6" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Shortcircuiting" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="Short-circuited" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked, AnyTrue()
+          </Original>
+          <Expanded>
+            { false, false, true, true, true } contains at least one true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[0]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[1]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[2]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            !(mocked.m_derefed[3])
+          </Original>
+          <Expanded>
+            !false
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            !(mocked.m_derefed[4])
           </Original>
           <Expanded>
             !false
@@ -16638,7 +17078,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[0]
+            mocked.m_derefed[0]
           </Original>
           <Expanded>
             true
@@ -16646,7 +17086,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[1]
+            mocked.m_derefed[1]
           </Original>
           <Expanded>
             true
@@ -16654,7 +17094,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[2]
+            mocked.m_derefed[2]
           </Original>
           <Expanded>
             true
@@ -16662,7 +17102,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[3]
+            mocked.m_derefed[3]
           </Original>
           <Expanded>
             true
@@ -16670,7 +17110,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[4]
+            mocked.m_derefed[4]
           </Original>
           <Expanded>
             true
@@ -16692,7 +17132,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            mocked.derefed[0]
+            mocked.m_derefed[0]
           </Original>
           <Expanded>
             true
@@ -16700,7 +17140,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[1])
+            !(mocked.m_derefed[1])
           </Original>
           <Expanded>
             !false
@@ -16708,7 +17148,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[2])
+            !(mocked.m_derefed[2])
           </Original>
           <Expanded>
             !false
@@ -16716,7 +17156,7 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[3])
+            !(mocked.m_derefed[3])
           </Original>
           <Expanded>
             !false
@@ -16724,7 +17164,227 @@ There is no extra whitespace here
         </Expression>
         <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
           <Original>
-            !(mocked.derefed[4])
+            !(mocked.m_derefed[4])
+          </Original>
+          <Expanded>
+            !false
+          </Expanded>
+        </Expression>
+        <OverallResults successes="6" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="6" failures="0" expectedFailures="0"/>
+    </Section>
+    <OverallResult success="true"/>
+  </TestCase>
+  <TestCase name="Usage of NoneTrue range matcher" tags="[matchers][quantifiers][templated]" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All true evaluates to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !NoneTrue()
+          </Original>
+          <Expanded>
+            { true, true, true, true, true } not contains no true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="Empty evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, NoneTrue()
+          </Original>
+          <Expanded>
+            {  } contains no true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="One true evalutes to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !NoneTrue()
+          </Original>
+          <Expanded>
+            { false, false, true, false, false } not contains no true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Basic usage" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All false evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, NoneTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, false } contains no true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All true evaluates to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !NoneTrue()
+          </Original>
+          <Expanded>
+            { true, true, true, true, true } not contains no true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="One true evalutes to false" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, !NoneTrue()
+          </Original>
+          <Expanded>
+            { false, false, true, false, false } not contains no true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Contained type is convertible to bool" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All false evaluates to true" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            data, NoneTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, false } contains no true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="1" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Type requires ADL found begin and end" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Original>
+          needs_adl, NoneTrue()
+        </Original>
+        <Expanded>
+          { false, false, false, false, false } contains no true
+        </Expanded>
+      </Expression>
+      <OverallResults successes="1" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Shortcircuiting" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="All are read" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked, NoneTrue()
+          </Original>
+          <Expanded>
+            { false, false, false, false, false } contains no true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[0]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[1]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[2]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[3]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[4]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <OverallResults successes="6" failures="0" expectedFailures="0"/>
+      </Section>
+      <OverallResults successes="6" failures="0" expectedFailures="0"/>
+    </Section>
+    <Section name="Shortcircuiting" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+      <Section name="Short-circuited" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+        <Expression success="true" type="REQUIRE_THAT" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked, !NoneTrue()
+          </Original>
+          <Expanded>
+            { false, false, true, true, true } not contains no true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[0]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[1]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            mocked.m_derefed[2]
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            !(mocked.m_derefed[3])
+          </Original>
+          <Expanded>
+            !false
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="REQUIRE_FALSE" filename="tests/<exe-name>/UsageTests/MatchersRanges.tests.cpp" >
+          <Original>
+            !(mocked.m_derefed[4])
           </Original>
           <Expanded>
             !false
@@ -20878,6 +21538,6 @@ There is no extra whitespace here
     </Section>
     <OverallResult success="true"/>
   </TestCase>
-  <OverallResults successes="2056" failures="143" expectedFailures="27"/>
-  <OverallResultsCases successes="291" failures="83" expectedFailures="7"/>
+  <OverallResults successes="2116" failures="143" expectedFailures="27"/>
+  <OverallResultsCases successes="294" failures="83" expectedFailures="7"/>
 </Catch2TestRun>
