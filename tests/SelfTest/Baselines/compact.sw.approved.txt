@@ -490,6 +490,10 @@ ToString.tests.cpp:<line number>: passed: enumInfo->lookup(1) == "Value2" for: V
 ToString.tests.cpp:<line number>: passed: enumInfo->lookup(3) == "{** unexpected enum value **}" for: {** unexpected enum value **}
 ==
 "{** unexpected enum value **}"
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, ElementsAreA( 1, 2, 3 ) for: { 1, 2, 3 } elements match
+MatchersRanges.tests.cpp:<line number>: failed: vector_a, !ElementsAreA( 1, 2 ) for: { 1, 2, 3 } not elements match
+MatchersRanges.tests.cpp:<line number>: failed: vector_a, !ElementsAreA( 1, 2, 3, 4 ) for: { 1, 2, 3 } not elements match
+MatchersRanges.tests.cpp:<line number>: failed: vector_a, !ElementsAreA( 1, 2, 4 ) for: { 1, 2, 3 } not elements match
 Stream.tests.cpp:<line number>: passed: Catch::makeStream( "" )->isStdout() for: true
 Tag.tests.cpp:<line number>: passed: Catch::TestCaseInfo( "", { "fake test name", "[]" }, dummySourceLineInfo )
 Matchers.tests.cpp:<line number>: failed: testStringForMatching(), EndsWith( "Substring" ) for: "this string contains 'abc' as a substring" ends with: "Substring"
@@ -1960,6 +1964,21 @@ There is no extra whitespace here
 StringManip.tests.cpp:<line number>: passed: trim(StringRef(whitespace_at_both_ends)) == StringRef(no_whitespace) for: There is no extra whitespace here
 ==
 There is no extra whitespace here
+MatchersRanges.tests.cpp:<line number>: passed: array_int_a, ElementsAre( vector_int_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: array_int_a, UnorderedElementsAre( vector_int_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: array_int_3, !ElementsAre( array_int_4 ) for: { 1, 2, 3 } not elements are { 1, 2, 3, 4 }
+MatchersRanges.tests.cpp:<line number>: passed: array_int_3, !UnorderedElementsAre( array_int_4 ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4 }
+MatchersRanges.tests.cpp:<line number>: passed: array_int_a, ElementsAre( vector_char_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: array_int_a, UnorderedElementsAre( vector_char_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: with 1 message: 'ContainerIsRandomAccess( array_int_a ) != ContainerIsRandomAccess( list_char_a )'
+MatchersRanges.tests.cpp:<line number>: passed: array_int_a, ElementsAre( list_char_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: array_int_a, UnorderedElementsAre( list_char_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_int_a, ElementsAre( vector_char_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_int_a, UnorderedElementsAre( vector_char_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_int_a, !ElementsAre( vector_char_b ) for: { 1, 2, 3 } not elements are { 1, 2, 2 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_int_a, !UnorderedElementsAre( vector_char_b ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 2 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, ElementsAre( array_a_plus_1, close_enough ) for: { 1, 2, 3 } elements are { 2, 3, 4 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, UnorderedElementsAre( array_a_plus_1, close_enough ) for: { 1, 2, 3 } unordered elements are { 2, 3, 4 }
 Exception.tests.cpp:<line number>: failed: unexpected exception with message: '3.14'
 UniquePtr.tests.cpp:<line number>: passed: bptr->i == 3 for: 3 == 3
 UniquePtr.tests.cpp:<line number>: passed: bptr->i == 3 for: 3 == 3
@@ -1967,47 +1986,77 @@ MatchersRanges.tests.cpp:<line number>: passed: data, AllMatch(SizeIs(5)) for: {
 MatchersRanges.tests.cpp:<line number>: passed: data, !AllMatch(Contains(0) && Contains(1)) for: { { 0, 1, 2, 3, 5 }, { 4, -3, -2, 5, 0 }, { 0, 0, 0, 5, 0 }, { 0, -5, 0, 5, 0 }, { 1, 0, 0, -1, 5 } } not all match ( contains element 0 and contains element 1 )
 MatchersRanges.tests.cpp:<line number>: passed: needs_adl, AllMatch( Predicate<int>( []( int elem ) { return elem < 6; } ) ) for: { 1, 2, 3, 4, 5 } all match matches undescribed predicate
 MatchersRanges.tests.cpp:<line number>: passed: mocked, allMatch for: { 1, 2, 3, 4, 5 } all match matches undescribed predicate
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[0] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[1] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[2] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[3] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[4] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[0] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[1] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[2] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[3] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[4] for: true
 MatchersRanges.tests.cpp:<line number>: passed: mocked, !allMatch for: { 1, 2, 3, 4, 5 } not all match matches undescribed predicate
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[0] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[1] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[2] for: true
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[3]) for: !false
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[4]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[0] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[1] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[2] for: true
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[3]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[4]) for: !false
 MatchersRanges.tests.cpp:<line number>: passed: data, AnyMatch(SizeIs(5)) for: { { 0, 1, 2, 3, 5 }, { 4, -3, -2, 5, 0 }, { 0, 0, 0, 5, 0 }, { 0, -5, 0, 5, 0 }, { 1, 0, 0, -1, 5 } } any match has size == 5
 MatchersRanges.tests.cpp:<line number>: passed: data, !AnyMatch(Contains(0) && Contains(10)) for: { { 0, 1, 2, 3, 5 }, { 4, -3, -2, 5, 0 }, { 0, 0, 0, 5, 0 }, { 0, -5, 0, 5, 0 }, { 1, 0, 0, -1, 5 } } not any match ( contains element 0 and contains element 10 )
 MatchersRanges.tests.cpp:<line number>: passed: needs_adl, AnyMatch( Predicate<int>( []( int elem ) { return elem < 3; } ) ) for: { 1, 2, 3, 4, 5 } any match matches undescribed predicate
 MatchersRanges.tests.cpp:<line number>: passed: mocked, !anyMatch for: { 1, 2, 3, 4, 5 } not any match matches undescribed predicate
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[0] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[1] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[2] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[3] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[4] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[0] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[1] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[2] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[3] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[4] for: true
 MatchersRanges.tests.cpp:<line number>: passed: mocked, anyMatch for: { 1, 2, 3, 4, 5 } any match matches undescribed predicate
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[0] for: true
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[1]) for: !false
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[2]) for: !false
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[3]) for: !false
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[4]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[0] for: true
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[1]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[2]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[3]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[4]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: empty_vector, ElementsAre( empty_vector ) for: {  } elements are {  }
+MatchersRanges.tests.cpp:<line number>: passed: empty_vector, !ElementsAre( non_empty_vector ) for: {  } not elements are { 1 }
+MatchersRanges.tests.cpp:<line number>: passed: non_empty_vector, !ElementsAre( empty_vector ) for: { 1 } not elements are {  }
+MatchersRanges.tests.cpp:<line number>: passed: non_empty_array, ElementsAre( non_empty_array ) for: { 1 } elements are { 1 }
+MatchersRanges.tests.cpp:<line number>: passed: array_a, ElementsAre( array_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: array_a, !ElementsAre( array_b ) for: { 1, 2, 3 } not elements are { 2, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: array_a, !ElementsAre( array_c ) for: { 1, 2, 3 } not elements are { 1, 2, 2 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, !ElementsAre( vector_b ) for: { 1, 2, 3 } not elements are { 1, 2, 3, 4 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, ElementsAre( in_a1 ) for: { 1, 2, 3, 4, 5 } elements are { 1, 2, 3, 4, 5 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, ElementsAre( in_a2 ) for: { 1, 2, 3, 4, 5 } elements are { 1, 2, 3, 4, 5 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, !ElementsAre( in_a_short ) for: { 1, 2, 3, 4, 5 } not elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a_short, !ElementsAre( in_a1 ) for: { 1, 2, 3 } not elements are { 1, 2, 3, 4, 5 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, !ElementsAre( in_b ) for: { 1, 2, 3, 4, 5 } not elements are { 11, 12, 13, 14, 15 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, ElementsAre( vector_a_plus_1, close_enough ) for: { 1, 2, 3 } elements are { 2, 3, 4 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, !ElementsAre( vector_b, close_enough ) for: { 1, 2, 3 } not elements are { 3, 3, 4 }
 MatchersRanges.tests.cpp:<line number>: passed: data, NoneMatch(SizeIs(6)) for: { { 0, 1, 2, 3, 5 }, { 4, -3, -2, 5, 0 }, { 0, 0, 0, 5, 0 }, { 0, -5, 0, 5, 0 }, { 1, 0, 0, -1, 5 } } none match has size == 6
 MatchersRanges.tests.cpp:<line number>: passed: data, !NoneMatch(Contains(0) && Contains(1)) for: { { 0, 1, 2, 3, 5 }, { 4, -3, -2, 5, 0 }, { 0, 0, 0, 5, 0 }, { 0, -5, 0, 5, 0 }, { 1, 0, 0, -1, 5 } } not none match ( contains element 0 and contains element 1 )
 MatchersRanges.tests.cpp:<line number>: passed: needs_adl, NoneMatch( Predicate<int>( []( int elem ) { return elem > 6; } ) ) for: { 1, 2, 3, 4, 5 } none match matches undescribed predicate
 MatchersRanges.tests.cpp:<line number>: passed: mocked, noneMatch for: { 1, 2, 3, 4, 5 } none match matches undescribed predicate
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[0] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[1] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[2] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[3] for: true
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[4] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[0] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[1] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[2] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[3] for: true
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[4] for: true
 MatchersRanges.tests.cpp:<line number>: passed: mocked, !noneMatch for: { 1, 2, 3, 4, 5 } not none match matches undescribed predicate
-MatchersRanges.tests.cpp:<line number>: passed: mocked.m_derefed[0] for: true
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[1]) for: !false
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[2]) for: !false
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[3]) for: !false
-MatchersRanges.tests.cpp:<line number>: passed: !(mocked.m_derefed[4]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: mocked.derefed[0] for: true
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[1]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[2]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[3]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: !(mocked.derefed[4]) for: !false
+MatchersRanges.tests.cpp:<line number>: passed: empty_vector, UnorderedElementsAre( empty_vector ) for: {  } unordered elements are {  }
+MatchersRanges.tests.cpp:<line number>: passed: empty_vector, !UnorderedElementsAre( non_empty_vector ) for: {  } not unordered elements are { 1 }
+MatchersRanges.tests.cpp:<line number>: passed: non_empty_vector, !UnorderedElementsAre( empty_vector ) for: { 1 } not unordered elements are {  }
+MatchersRanges.tests.cpp:<line number>: passed: non_empty_array, UnorderedElementsAre( non_empty_array ) for: { 1 } unordered elements are { 1 }
+MatchersRanges.tests.cpp:<line number>: passed: array_a, UnorderedElementsAre( array_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: array_a, !UnorderedElementsAre( array_b ) for: { 1, 2, 3 } not unordered elements are { 2, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, !UnorderedElementsAre( vector_b ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, UnorderedElementsAre( in_a1 ) for: { 1, 2, 3, 4, 5 } unordered elements are { 1, 2, 3, 4, 5 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, UnorderedElementsAre( in_a2 ) for: { 1, 2, 3, 4, 5 } unordered elements are { 1, 2, 3, 4, 5 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, UnorderedElementsAre( in_a_permuted ) for: { 1, 2, 3, 4, 5 } unordered elements are { 5, 4, 3, 2, 1 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, !UnorderedElementsAre( in_a_short ) for: { 1, 2, 3, 4, 5 } not unordered elements are { 1, 2, 3 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a_short, !UnorderedElementsAre( in_a1 ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4, 5 }
+MatchersRanges.tests.cpp:<line number>: passed: in_a1, !UnorderedElementsAre( in_b ) for: { 1, 2, 3, 4, 5 } not unordered elements are { 6, 2, 3, 4, 5 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, UnorderedElementsAre( vector_a_plus_1, close_enough ) for: { 1, 10, 20 } unordered elements are { 11, 21, 2 }
+MatchersRanges.tests.cpp:<line number>: passed: vector_a, !UnorderedElementsAre( vector_b, close_enough ) for: { 1, 10, 21 } not unordered elements are { 11, 21, 3 }
 MatchersRanges.tests.cpp:<line number>: passed: empty_vec, SizeIs(0) for: {  } has size == 0
 MatchersRanges.tests.cpp:<line number>: passed: empty_vec, !SizeIs(2) for: {  } not has size == 2
 MatchersRanges.tests.cpp:<line number>: passed: empty_vec, SizeIs(Lt(2)) for: {  } size matches is less than 2
@@ -2309,7 +2358,6 @@ StringManip.tests.cpp:<line number>: passed: !(Catch::replaceInPlace(letters, "x
 StringManip.tests.cpp:<line number>: passed: letters == letters for: "abcdefcg" == "abcdefcg"
 StringManip.tests.cpp:<line number>: passed: Catch::replaceInPlace(s, "'", "|'") for: true
 StringManip.tests.cpp:<line number>: passed: s == "didn|'t" for: "didn|'t" == "didn|'t"
-Stream.tests.cpp:<line number>: passed: Catch::makeStream( "%somestream" )
 InternalBenchmark.tests.cpp:<line number>: passed: res.size() == count for: 10 == 10
 InternalBenchmark.tests.cpp:<line number>: passed: res[i] == rate for: 1000.0 == 1000 (0x<hex digits>)
 InternalBenchmark.tests.cpp:<line number>: passed: res[i] == rate for: 1000.0 == 1000 (0x<hex digits>)
@@ -2368,8 +2416,6 @@ ToStringGeneral.tests.cpp:<line number>: passed: Catch::Detail::stringify( set )
 ToStringPair.tests.cpp:<line number>: passed: ::Catch::Detail::stringify( pr ) == "{ { \"green\", 55 } }" for: "{ { "green", 55 } }"
 ==
 "{ { "green", 55 } }"
-Stream.tests.cpp:<line number>: passed: Catch::makeStream( "%stderr" )->isStdout() for: true
-Stream.tests.cpp:<line number>: passed: Catch::makeStream( "%stdout" )->isStdout() for: true
 ToStringWhich.tests.cpp:<line number>: passed: ::Catch::Detail::stringify(streamable_range{}) == "op<<(streamable_range)" for: "op<<(streamable_range)"
 ==
 "op<<(streamable_range)"
@@ -2506,5 +2552,5 @@ InternalBenchmark.tests.cpp:<line number>: passed: med == 18. for: 18.0 == 18.0
 InternalBenchmark.tests.cpp:<line number>: passed: q3 == 23. for: 23.0 == 23.0
 Misc.tests.cpp:<line number>: passed:
 Misc.tests.cpp:<line number>: passed:
-Failed 83 test cases, failed 143 assertions.
+Failed 84 test cases, failed 146 assertions.
 

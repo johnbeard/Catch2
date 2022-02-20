@@ -974,6 +974,14 @@ ok {test-number} - enumInfo->lookup(0) == "Value1" for: Value1 == "Value1"
 ok {test-number} - enumInfo->lookup(1) == "Value2" for: Value2 == "Value2"
 # Directly creating an EnumInfo
 ok {test-number} - enumInfo->lookup(3) == "{** unexpected enum value **}" for: {** unexpected enum value **} == "{** unexpected enum value **}"
+# ElementsAre with direct variadic ctor
+ok {test-number} - vector_a, ElementsAreA( 1, 2, 3 ) for: { 1, 2, 3 } elements match
+# ElementsAre with direct variadic ctor
+not ok {test-number} - vector_a, !ElementsAreA( 1, 2 ) for: { 1, 2, 3 } not elements match
+# ElementsAre with direct variadic ctor
+not ok {test-number} - vector_a, !ElementsAreA( 1, 2, 3, 4 ) for: { 1, 2, 3 } not elements match
+# ElementsAre with direct variadic ctor
+not ok {test-number} - vector_a, !ElementsAreA( 1, 2, 4 ) for: { 1, 2, 3 } not elements match
 # Empty stream name opens cout stream
 ok {test-number} - Catch::makeStream( "" )->isStdout() for: true
 # Empty tag is not allowed
@@ -3473,6 +3481,36 @@ ok {test-number} - trim(StringRef(leading_whitespace)) == StringRef(no_whitespac
 ok {test-number} - trim(StringRef(trailing_whitespace)) == StringRef(no_whitespace) for: There is no extra whitespace here == There is no extra whitespace here
 # Trim strings
 ok {test-number} - trim(StringRef(whitespace_at_both_ends)) == StringRef(no_whitespace) for: There is no extra whitespace here == There is no extra whitespace here
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_a, ElementsAre( vector_int_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_a, UnorderedElementsAre( vector_int_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_3, !ElementsAre( array_int_4 ) for: { 1, 2, 3 } not elements are { 1, 2, 3, 4 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_3, !UnorderedElementsAre( array_int_4 ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_a, ElementsAre( vector_char_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_a, UnorderedElementsAre( vector_char_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - with 1 message: 'ContainerIsRandomAccess( array_int_a ) != ContainerIsRandomAccess( list_char_a )'
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_a, ElementsAre( list_char_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - array_int_a, UnorderedElementsAre( list_char_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - vector_int_a, ElementsAre( vector_char_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - vector_int_a, UnorderedElementsAre( vector_char_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - vector_int_a, !ElementsAre( vector_char_b ) for: { 1, 2, 3 } not elements are { 1, 2, 2 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - vector_int_a, !UnorderedElementsAre( vector_char_b ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 2 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - vector_a, ElementsAre( array_a_plus_1, close_enough ) for: { 1, 2, 3 } elements are { 2, 3, 4 }
+# Type conversions of ElementsAre and similar
+ok {test-number} - vector_a, UnorderedElementsAre( array_a_plus_1, close_enough ) for: { 1, 2, 3 } unordered elements are { 2, 3, 4 }
 # Unexpected exceptions can be translated
 not ok {test-number} - unexpected exception with message: '3.14'
 # Upcasting special member functions
@@ -3488,27 +3526,27 @@ ok {test-number} - needs_adl, AllMatch( Predicate<int>( []( int elem ) { return 
 # Usage of AllMatch range matcher
 ok {test-number} - mocked, allMatch for: { 1, 2, 3, 4, 5 } all match matches undescribed predicate
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[0] for: true
+ok {test-number} - mocked.derefed[0] for: true
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[1] for: true
+ok {test-number} - mocked.derefed[1] for: true
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[2] for: true
+ok {test-number} - mocked.derefed[2] for: true
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[3] for: true
+ok {test-number} - mocked.derefed[3] for: true
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[4] for: true
+ok {test-number} - mocked.derefed[4] for: true
 # Usage of AllMatch range matcher
 ok {test-number} - mocked, !allMatch for: { 1, 2, 3, 4, 5 } not all match matches undescribed predicate
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[0] for: true
+ok {test-number} - mocked.derefed[0] for: true
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[1] for: true
+ok {test-number} - mocked.derefed[1] for: true
 # Usage of AllMatch range matcher
-ok {test-number} - mocked.m_derefed[2] for: true
+ok {test-number} - mocked.derefed[2] for: true
 # Usage of AllMatch range matcher
-ok {test-number} - !(mocked.m_derefed[3]) for: !false
+ok {test-number} - !(mocked.derefed[3]) for: !false
 # Usage of AllMatch range matcher
-ok {test-number} - !(mocked.m_derefed[4]) for: !false
+ok {test-number} - !(mocked.derefed[4]) for: !false
 # Usage of AnyMatch range matcher
 ok {test-number} - data, AnyMatch(SizeIs(5)) for: { { 0, 1, 2, 3, 5 }, { 4, -3, -2, 5, 0 }, { 0, 0, 0, 5, 0 }, { 0, -5, 0, 5, 0 }, { 1, 0, 0, -1, 5 } } any match has size == 5
 # Usage of AnyMatch range matcher
@@ -3518,27 +3556,57 @@ ok {test-number} - needs_adl, AnyMatch( Predicate<int>( []( int elem ) { return 
 # Usage of AnyMatch range matcher
 ok {test-number} - mocked, !anyMatch for: { 1, 2, 3, 4, 5 } not any match matches undescribed predicate
 # Usage of AnyMatch range matcher
-ok {test-number} - mocked.m_derefed[0] for: true
+ok {test-number} - mocked.derefed[0] for: true
 # Usage of AnyMatch range matcher
-ok {test-number} - mocked.m_derefed[1] for: true
+ok {test-number} - mocked.derefed[1] for: true
 # Usage of AnyMatch range matcher
-ok {test-number} - mocked.m_derefed[2] for: true
+ok {test-number} - mocked.derefed[2] for: true
 # Usage of AnyMatch range matcher
-ok {test-number} - mocked.m_derefed[3] for: true
+ok {test-number} - mocked.derefed[3] for: true
 # Usage of AnyMatch range matcher
-ok {test-number} - mocked.m_derefed[4] for: true
+ok {test-number} - mocked.derefed[4] for: true
 # Usage of AnyMatch range matcher
 ok {test-number} - mocked, anyMatch for: { 1, 2, 3, 4, 5 } any match matches undescribed predicate
 # Usage of AnyMatch range matcher
-ok {test-number} - mocked.m_derefed[0] for: true
+ok {test-number} - mocked.derefed[0] for: true
 # Usage of AnyMatch range matcher
-ok {test-number} - !(mocked.m_derefed[1]) for: !false
+ok {test-number} - !(mocked.derefed[1]) for: !false
 # Usage of AnyMatch range matcher
-ok {test-number} - !(mocked.m_derefed[2]) for: !false
+ok {test-number} - !(mocked.derefed[2]) for: !false
 # Usage of AnyMatch range matcher
-ok {test-number} - !(mocked.m_derefed[3]) for: !false
+ok {test-number} - !(mocked.derefed[3]) for: !false
 # Usage of AnyMatch range matcher
-ok {test-number} - !(mocked.m_derefed[4]) for: !false
+ok {test-number} - !(mocked.derefed[4]) for: !false
+# Usage of ElementsAre range matcher
+ok {test-number} - empty_vector, ElementsAre( empty_vector ) for: {  } elements are {  }
+# Usage of ElementsAre range matcher
+ok {test-number} - empty_vector, !ElementsAre( non_empty_vector ) for: {  } not elements are { 1 }
+# Usage of ElementsAre range matcher
+ok {test-number} - non_empty_vector, !ElementsAre( empty_vector ) for: { 1 } not elements are {  }
+# Usage of ElementsAre range matcher
+ok {test-number} - non_empty_array, ElementsAre( non_empty_array ) for: { 1 } elements are { 1 }
+# Usage of ElementsAre range matcher
+ok {test-number} - array_a, ElementsAre( array_a ) for: { 1, 2, 3 } elements are { 1, 2, 3 }
+# Usage of ElementsAre range matcher
+ok {test-number} - array_a, !ElementsAre( array_b ) for: { 1, 2, 3 } not elements are { 2, 2, 3 }
+# Usage of ElementsAre range matcher
+ok {test-number} - array_a, !ElementsAre( array_c ) for: { 1, 2, 3 } not elements are { 1, 2, 2 }
+# Usage of ElementsAre range matcher
+ok {test-number} - vector_a, !ElementsAre( vector_b ) for: { 1, 2, 3 } not elements are { 1, 2, 3, 4 }
+# Usage of ElementsAre range matcher
+ok {test-number} - in_a1, ElementsAre( in_a1 ) for: { 1, 2, 3, 4, 5 } elements are { 1, 2, 3, 4, 5 }
+# Usage of ElementsAre range matcher
+ok {test-number} - in_a1, ElementsAre( in_a2 ) for: { 1, 2, 3, 4, 5 } elements are { 1, 2, 3, 4, 5 }
+# Usage of ElementsAre range matcher
+ok {test-number} - in_a1, !ElementsAre( in_a_short ) for: { 1, 2, 3, 4, 5 } not elements are { 1, 2, 3 }
+# Usage of ElementsAre range matcher
+ok {test-number} - in_a_short, !ElementsAre( in_a1 ) for: { 1, 2, 3 } not elements are { 1, 2, 3, 4, 5 }
+# Usage of ElementsAre range matcher
+ok {test-number} - in_a1, !ElementsAre( in_b ) for: { 1, 2, 3, 4, 5 } not elements are { 11, 12, 13, 14, 15 }
+# Usage of ElementsAre range matcher
+ok {test-number} - vector_a, ElementsAre( vector_a_plus_1, close_enough ) for: { 1, 2, 3 } elements are { 2, 3, 4 }
+# Usage of ElementsAre range matcher
+ok {test-number} - vector_a, !ElementsAre( vector_b, close_enough ) for: { 1, 2, 3 } not elements are { 3, 3, 4 }
 # Usage of NoneMatch range matcher
 ok {test-number} - data, NoneMatch(SizeIs(6)) for: { { 0, 1, 2, 3, 5 }, { 4, -3, -2, 5, 0 }, { 0, 0, 0, 5, 0 }, { 0, -5, 0, 5, 0 }, { 1, 0, 0, -1, 5 } } none match has size == 6
 # Usage of NoneMatch range matcher
@@ -3548,27 +3616,57 @@ ok {test-number} - needs_adl, NoneMatch( Predicate<int>( []( int elem ) { return
 # Usage of NoneMatch range matcher
 ok {test-number} - mocked, noneMatch for: { 1, 2, 3, 4, 5 } none match matches undescribed predicate
 # Usage of NoneMatch range matcher
-ok {test-number} - mocked.m_derefed[0] for: true
+ok {test-number} - mocked.derefed[0] for: true
 # Usage of NoneMatch range matcher
-ok {test-number} - mocked.m_derefed[1] for: true
+ok {test-number} - mocked.derefed[1] for: true
 # Usage of NoneMatch range matcher
-ok {test-number} - mocked.m_derefed[2] for: true
+ok {test-number} - mocked.derefed[2] for: true
 # Usage of NoneMatch range matcher
-ok {test-number} - mocked.m_derefed[3] for: true
+ok {test-number} - mocked.derefed[3] for: true
 # Usage of NoneMatch range matcher
-ok {test-number} - mocked.m_derefed[4] for: true
+ok {test-number} - mocked.derefed[4] for: true
 # Usage of NoneMatch range matcher
 ok {test-number} - mocked, !noneMatch for: { 1, 2, 3, 4, 5 } not none match matches undescribed predicate
 # Usage of NoneMatch range matcher
-ok {test-number} - mocked.m_derefed[0] for: true
+ok {test-number} - mocked.derefed[0] for: true
 # Usage of NoneMatch range matcher
-ok {test-number} - !(mocked.m_derefed[1]) for: !false
+ok {test-number} - !(mocked.derefed[1]) for: !false
 # Usage of NoneMatch range matcher
-ok {test-number} - !(mocked.m_derefed[2]) for: !false
+ok {test-number} - !(mocked.derefed[2]) for: !false
 # Usage of NoneMatch range matcher
-ok {test-number} - !(mocked.m_derefed[3]) for: !false
+ok {test-number} - !(mocked.derefed[3]) for: !false
 # Usage of NoneMatch range matcher
-ok {test-number} - !(mocked.m_derefed[4]) for: !false
+ok {test-number} - !(mocked.derefed[4]) for: !false
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - empty_vector, UnorderedElementsAre( empty_vector ) for: {  } unordered elements are {  }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - empty_vector, !UnorderedElementsAre( non_empty_vector ) for: {  } not unordered elements are { 1 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - non_empty_vector, !UnorderedElementsAre( empty_vector ) for: { 1 } not unordered elements are {  }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - non_empty_array, UnorderedElementsAre( non_empty_array ) for: { 1 } unordered elements are { 1 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - array_a, UnorderedElementsAre( array_a ) for: { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - array_a, !UnorderedElementsAre( array_b ) for: { 1, 2, 3 } not unordered elements are { 2, 2, 3 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - vector_a, !UnorderedElementsAre( vector_b ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - in_a1, UnorderedElementsAre( in_a1 ) for: { 1, 2, 3, 4, 5 } unordered elements are { 1, 2, 3, 4, 5 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - in_a1, UnorderedElementsAre( in_a2 ) for: { 1, 2, 3, 4, 5 } unordered elements are { 1, 2, 3, 4, 5 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - in_a1, UnorderedElementsAre( in_a_permuted ) for: { 1, 2, 3, 4, 5 } unordered elements are { 5, 4, 3, 2, 1 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - in_a1, !UnorderedElementsAre( in_a_short ) for: { 1, 2, 3, 4, 5 } not unordered elements are { 1, 2, 3 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - in_a_short, !UnorderedElementsAre( in_a1 ) for: { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4, 5 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - in_a1, !UnorderedElementsAre( in_b ) for: { 1, 2, 3, 4, 5 } not unordered elements are { 6, 2, 3, 4, 5 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - vector_a, UnorderedElementsAre( vector_a_plus_1, close_enough ) for: { 1, 10, 20 } unordered elements are { 11, 21, 2 }
+# Usage of UnorderedElementsAre range matcher
+ok {test-number} - vector_a, !UnorderedElementsAre( vector_b, close_enough ) for: { 1, 10, 21 } not unordered elements are { 11, 21, 3 }
 # Usage of the SizeIs range matcher
 ok {test-number} - empty_vec, SizeIs(0) for: {  } has size == 0
 # Usage of the SizeIs range matcher
@@ -4138,8 +4236,6 @@ ok {test-number} - letters == letters for: "abcdefcg" == "abcdefcg"
 ok {test-number} - Catch::replaceInPlace(s, "'", "|'") for: true
 # replaceInPlace
 ok {test-number} - s == "didn|'t" for: "didn|'t" == "didn|'t"
-# request an unknown %-starting stream fails
-ok {test-number} - Catch::makeStream( "%somestream" )
 # resolution
 ok {test-number} - res.size() == count for: 10 == 10
 # resolution
@@ -4244,10 +4340,6 @@ ok {test-number} - Catch::Detail::stringify( set ) == "{ \"one\" }" for: "{ "one
 ok {test-number} - Catch::Detail::stringify( set ) == "{ \"abc\", \"def\", \"ghi\" }" for: "{ "abc", "def", "ghi" }" == "{ "abc", "def", "ghi" }"
 # std::vector<std::pair<std::string,int> > -> toString
 ok {test-number} - ::Catch::Detail::stringify( pr ) == "{ { \"green\", 55 } }" for: "{ { "green", 55 } }" == "{ { "green", 55 } }"
-# stdout and stderr streams have %-starting name
-ok {test-number} - Catch::makeStream( "%stderr" )->isStdout() for: true
-# stdout and stderr streams have %-starting name
-ok {test-number} - Catch::makeStream( "%stdout" )->isStdout() for: true
 # stringify ranges
 ok {test-number} - ::Catch::Detail::stringify(streamable_range{}) == "op<<(streamable_range)" for: "op<<(streamable_range)" == "op<<(streamable_range)"
 # stringify ranges
@@ -4464,5 +4556,5 @@ ok {test-number} - q3 == 23. for: 23.0 == 23.0
 ok {test-number} -
 # xmlentitycheck
 ok {test-number} -
-1..2231
+1..2277
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="<exe-name>" errors="17" failures="126" tests="2231" hostname="tbd" time="{duration}" timestamp="{iso8601-timestamp}">
+  <testsuite name="<exe-name>" errors="17" failures="129" tests="2277" hostname="tbd" time="{duration}" timestamp="{iso8601-timestamp}">
     <properties>
       <property name="random-seed" value="1"/>
       <property name="filters" value="~[!nonportable]~[!benchmark]~[approvals] *"/>
@@ -450,6 +450,29 @@ Exception.tests.cpp:<line number>
     </testcase>
     <testcase classname="<exe-name>.global" name="Default scale is invisible to comparison" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Directly creating an EnumInfo" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="ElementsAre with direct variadic ctor/Basic" time="{duration}" status="run">
+      <failure message="vector_a, !ElementsAreA( 1, 2 )" type="CHECK_THAT">
+FAILED:
+  CHECK_THAT( vector_a, !ElementsAreA( 1, 2 ) )
+with expansion:
+  { 1, 2, 3 } not elements match
+MatchersRanges.tests.cpp:<line number>
+      </failure>
+      <failure message="vector_a, !ElementsAreA( 1, 2, 3, 4 )" type="CHECK_THAT">
+FAILED:
+  CHECK_THAT( vector_a, !ElementsAreA( 1, 2, 3, 4 ) )
+with expansion:
+  { 1, 2, 3 } not elements match
+MatchersRanges.tests.cpp:<line number>
+      </failure>
+      <failure message="vector_a, !ElementsAreA( 1, 2, 4 )" type="CHECK_THAT">
+FAILED:
+  CHECK_THAT( vector_a, !ElementsAreA( 1, 2, 4 ) )
+with expansion:
+  { 1, 2, 3 } not elements match
+MatchersRanges.tests.cpp:<line number>
+      </failure>
+    </testcase>
     <testcase classname="<exe-name>.global" name="Empty stream name opens cout stream" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Empty tag is not allowed" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="EndsWith string matcher" time="{duration}" status="run">
@@ -1389,6 +1412,13 @@ Exception.tests.cpp:<line number>
     <testcase classname="<exe-name>.global" name="Tracker/successfully close one section, then find another/Re-enter - skips S1 and enters S2/fail S2" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Tracker/open a nested section" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Trim strings" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Type conversions of ElementsAre and similar/Container conversions/Two equal containers of different container types" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Type conversions of ElementsAre and similar/Container conversions/Two equal containers of different container types (differ in array N)" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Type conversions of ElementsAre and similar/Container conversions/Two equal containers of different container types and value types" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Type conversions of ElementsAre and similar/Container conversions/Two equal containers, one random access, one not" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Type conversions of ElementsAre and similar/Value type/Two equal containers of different value types" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Type conversions of ElementsAre and similar/Value type/Two non-equal containers of different value types" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Type conversions of ElementsAre and similar/Custom predicate/Two equal non-empty containers (close enough)" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Unexpected exceptions can be translated" time="{duration}" status="run">
       <error type="TEST_CASE">
 FAILED:
@@ -1406,10 +1436,28 @@ Exception.tests.cpp:<line number>
     <testcase classname="<exe-name>.global" name="Usage of AnyMatch range matcher/Type requires ADL found begin and end" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of AnyMatch range matcher/Shortcircuiting/All are read" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of AnyMatch range matcher/Shortcircuiting/Short-circuited" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Basic usage/Empty container matches empty container" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Basic usage/Empty container does not match non-empty container" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Basic usage/Two equal 1-length non-empty containers" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Basic usage/Two equal-sized, equal, non-empty containers" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Basic usage/Two equal-sized, non-equal, non-empty containers" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Basic usage/Two non-equal-sized, non-empty containers (with same first elements)" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Basic usage/Can handle type that requires ADL-found free function begin and end" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Custom predicate/Two equal non-empty containers (close enough)" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of ElementsAre range matcher/Custom predicate/Two non-equal non-empty containers (close enough)" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of NoneMatch range matcher/Basic usage" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of NoneMatch range matcher/Type requires ADL found begin and end" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of NoneMatch range matcher/Shortcircuiting/All are read" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of NoneMatch range matcher/Shortcircuiting/Short-circuited" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Basic usage/Empty container matches empty container" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Basic usage/Empty container does not match non-empty container" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Basic usage/Two equal 1-length non-empty containers" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Basic usage/Two equal-sized, equal, non-empty containers" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Basic usage/Two equal-sized, non-equal, non-empty containers" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Basic usage/Two non-equal-sized, non-empty containers" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Basic usage/Can handle type that requires ADL-found free function begin and end" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Custom predicate/Two equal non-empty containers (close enough)" time="{duration}" status="run"/>
+    <testcase classname="<exe-name>.global" name="Usage of UnorderedElementsAre range matcher/Custom predicate/Two non-equal non-empty containers (close enough)" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of the SizeIs range matcher/Some with stdlib containers" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of the SizeIs range matcher/Type requires ADL found size free function" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="Usage of the SizeIs range matcher/Type has size member" time="{duration}" status="run"/>
@@ -1784,7 +1832,6 @@ Message.tests.cpp:<line number>
     <testcase classname="<exe-name>.global" name="replaceInPlace/replace all chars" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="replaceInPlace/replace no chars" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="replaceInPlace/escape '" time="{duration}" status="run"/>
-    <testcase classname="<exe-name>.global" name="request an unknown %-starting stream fails" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="resolution" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="run_for_at_least, chronometer" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="run_for_at_least, int" time="{duration}" status="run"/>
@@ -1837,7 +1884,6 @@ Message.tests.cpp:<line number>
     <testcase classname="<exe-name>.global" name="std::set is convertible string/single item" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="std::set is convertible string/several items" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="std::vector&lt;std::pair&lt;std::string,int> > -> toString" time="{duration}" status="run"/>
-    <testcase classname="<exe-name>.global" name="stdout and stderr streams have %-starting name" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="stringify ranges" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="stringify( has_maker )" time="{duration}" status="run"/>
     <testcase classname="<exe-name>.global" name="stringify( has_maker_and_operator )" time="{duration}" status="run"/>

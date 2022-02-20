@@ -258,6 +258,10 @@ definitions to handle generic range-like types. These are:
 * `SizeIs(Matcher size_matcher)`
 * `Contains(T&& target_element, Comparator = std::equal_to<>{})`
 * `Contains(Matcher element_matcher)`
+* `ElementsAre(const TargetRangeLike&)`
+* `ElementsAre(TargetRangeLike&&)`
+* `UnorderedElementsAre(const TargetRangeLike&)`
+* `UnorderedElementsAre(TargetRangeLike&&)`
 
 `IsEmpty` should be self-explanatory. It successfully matches objects
 that are empty according to either `std::empty`, or ADL-found `empty`
@@ -274,6 +278,19 @@ in which case a range is accepted if any of its elements is equal to
 the target element. The other variant is constructed from a matcher,
 in which case a range is accepted if any of its elements is accepted
 by the provided matcher.
+
+`ElementsAre` compares the range that the matcher is constructed with
+(the "target range") against the range to be tested. If the two ranges
+compare equal (according to `std::equal`, which uses `operator==` to
+determine equality), the match succeeds. The ranges do not need to be
+the same type, and the element types do not need to be the same (e.g.
+you may compare `std::vector<int>` to `std::array<char>`). The
+containers do not need to be the same length.
+
+`UnorderedElementsAre` is similar to `ElementsAre`, but the order
+does not matter. For example "1, 2, 3" would match "3, 2, 1". This
+matcher succeeds if `std::is_permuation` returns true. As for
+`ElementsAre`, this uses `operator==` to determine equality.
 
 
 ## Writing custom matchers (old style)

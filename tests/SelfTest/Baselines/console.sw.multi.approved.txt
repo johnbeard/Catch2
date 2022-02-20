@@ -3886,6 +3886,33 @@ with expansion:
   "{** unexpected enum value **}"
 
 -------------------------------------------------------------------------------
+ElementsAre with direct variadic ctor
+  Basic
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, ElementsAreA( 1, 2, 3 ) )
+with expansion:
+  { 1, 2, 3 } elements match
+
+MatchersRanges.tests.cpp:<line number>: FAILED:
+  CHECK_THAT( vector_a, !ElementsAreA( 1, 2 ) )
+with expansion:
+  { 1, 2, 3 } not elements match
+
+MatchersRanges.tests.cpp:<line number>: FAILED:
+  CHECK_THAT( vector_a, !ElementsAreA( 1, 2, 3, 4 ) )
+with expansion:
+  { 1, 2, 3 } not elements match
+
+MatchersRanges.tests.cpp:<line number>: FAILED:
+  CHECK_THAT( vector_a, !ElementsAreA( 1, 2, 4 ) )
+with expansion:
+  { 1, 2, 3 } not elements match
+
+-------------------------------------------------------------------------------
 Empty stream name opens cout stream
 -------------------------------------------------------------------------------
 Stream.tests.cpp:<line number>
@@ -13869,6 +13896,137 @@ with expansion:
   There is no extra whitespace here
 
 -------------------------------------------------------------------------------
+Type conversions of ElementsAre and similar
+  Container conversions
+  Two equal containers of different container types
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_a, ElementsAre( vector_int_a ) )
+with expansion:
+  { 1, 2, 3 } elements are { 1, 2, 3 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_a, UnorderedElementsAre( vector_int_a ) )
+with expansion:
+  { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+
+-------------------------------------------------------------------------------
+Type conversions of ElementsAre and similar
+  Container conversions
+  Two equal containers of different container types (differ in array N)
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_3, !ElementsAre( array_int_4 ) )
+with expansion:
+  { 1, 2, 3 } not elements are { 1, 2, 3, 4 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_3, !UnorderedElementsAre( array_int_4 ) )
+with expansion:
+  { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4 }
+
+-------------------------------------------------------------------------------
+Type conversions of ElementsAre and similar
+  Container conversions
+  Two equal containers of different container types and value types
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_a, ElementsAre( vector_char_a ) )
+with expansion:
+  { 1, 2, 3 } elements are { 1, 2, 3 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_a, UnorderedElementsAre( vector_char_a ) )
+with expansion:
+  { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+
+-------------------------------------------------------------------------------
+Type conversions of ElementsAre and similar
+  Container conversions
+  Two equal containers, one random access, one not
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+with message:
+  ContainerIsRandomAccess( array_int_a ) != ContainerIsRandomAccess(
+  list_char_a )
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_a, ElementsAre( list_char_a ) )
+with expansion:
+  { 1, 2, 3 } elements are { 1, 2, 3 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_int_a, UnorderedElementsAre( list_char_a ) )
+with expansion:
+  { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+
+-------------------------------------------------------------------------------
+Type conversions of ElementsAre and similar
+  Value type
+  Two equal containers of different value types
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_int_a, ElementsAre( vector_char_a ) )
+with expansion:
+  { 1, 2, 3 } elements are { 1, 2, 3 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_int_a, UnorderedElementsAre( vector_char_a ) )
+with expansion:
+  { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+
+-------------------------------------------------------------------------------
+Type conversions of ElementsAre and similar
+  Value type
+  Two non-equal containers of different value types
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_int_a, !ElementsAre( vector_char_b ) )
+with expansion:
+  { 1, 2, 3 } not elements are { 1, 2, 2 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_int_a, !UnorderedElementsAre( vector_char_b ) )
+with expansion:
+  { 1, 2, 3 } not unordered elements are { 1, 2, 2 }
+
+-------------------------------------------------------------------------------
+Type conversions of ElementsAre and similar
+  Custom predicate
+  Two equal non-empty containers (close enough)
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, ElementsAre( array_a_plus_1, close_enough ) )
+with expansion:
+  { 1, 2, 3 } elements are { 2, 3, 4 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, UnorderedElementsAre( array_a_plus_1, close_enough ) )
+with expansion:
+  { 1, 2, 3 } unordered elements are { 2, 3, 4 }
+
+-------------------------------------------------------------------------------
 Unexpected exceptions can be translated
 -------------------------------------------------------------------------------
 Exception.tests.cpp:<line number>
@@ -13948,27 +14106,27 @@ with expansion:
   { 1, 2, 3, 4, 5 } all match matches undescribed predicate
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[0] )
+  REQUIRE( mocked.derefed[0] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[1] )
+  REQUIRE( mocked.derefed[1] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[2] )
+  REQUIRE( mocked.derefed[2] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[3] )
+  REQUIRE( mocked.derefed[3] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[4] )
+  REQUIRE( mocked.derefed[4] )
 with expansion:
   true
 
@@ -13986,27 +14144,27 @@ with expansion:
   { 1, 2, 3, 4, 5 } not all match matches undescribed predicate
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[0] )
+  REQUIRE( mocked.derefed[0] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[1] )
+  REQUIRE( mocked.derefed[1] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[2] )
+  REQUIRE( mocked.derefed[2] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[3] )
+  REQUIRE_FALSE( mocked.derefed[3] )
 with expansion:
   !false
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[4] )
+  REQUIRE_FALSE( mocked.derefed[4] )
 with expansion:
   !false
 
@@ -14056,27 +14214,27 @@ with expansion:
   { 1, 2, 3, 4, 5 } not any match matches undescribed predicate
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[0] )
+  REQUIRE( mocked.derefed[0] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[1] )
+  REQUIRE( mocked.derefed[1] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[2] )
+  REQUIRE( mocked.derefed[2] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[3] )
+  REQUIRE( mocked.derefed[3] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[4] )
+  REQUIRE( mocked.derefed[4] )
 with expansion:
   true
 
@@ -14094,29 +14252,176 @@ with expansion:
   { 1, 2, 3, 4, 5 } any match matches undescribed predicate
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[0] )
+  REQUIRE( mocked.derefed[0] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[1] )
+  REQUIRE_FALSE( mocked.derefed[1] )
 with expansion:
   !false
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[2] )
+  REQUIRE_FALSE( mocked.derefed[2] )
 with expansion:
   !false
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[3] )
+  REQUIRE_FALSE( mocked.derefed[3] )
 with expansion:
   !false
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[4] )
+  REQUIRE_FALSE( mocked.derefed[4] )
 with expansion:
   !false
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Basic usage
+  Empty container matches empty container
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( empty_vector, ElementsAre( empty_vector ) )
+with expansion:
+  {  } elements are {  }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Basic usage
+  Empty container does not match non-empty container
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( empty_vector, !ElementsAre( non_empty_vector ) )
+with expansion:
+  {  } not elements are { 1 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( non_empty_vector, !ElementsAre( empty_vector ) )
+with expansion:
+  { 1 } not elements are {  }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Basic usage
+  Two equal 1-length non-empty containers
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( non_empty_array, ElementsAre( non_empty_array ) )
+with expansion:
+  { 1 } elements are { 1 }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Basic usage
+  Two equal-sized, equal, non-empty containers
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_a, ElementsAre( array_a ) )
+with expansion:
+  { 1, 2, 3 } elements are { 1, 2, 3 }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Basic usage
+  Two equal-sized, non-equal, non-empty containers
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_a, !ElementsAre( array_b ) )
+with expansion:
+  { 1, 2, 3 } not elements are { 2, 2, 3 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_a, !ElementsAre( array_c ) )
+with expansion:
+  { 1, 2, 3 } not elements are { 1, 2, 2 }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Basic usage
+  Two non-equal-sized, non-empty containers (with same first elements)
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, !ElementsAre( vector_b ) )
+with expansion:
+  { 1, 2, 3 } not elements are { 1, 2, 3, 4 }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Basic usage
+  Can handle type that requires ADL-found free function begin and end
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, ElementsAre( in_a1 ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } elements are { 1, 2, 3, 4, 5 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, ElementsAre( in_a2 ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } elements are { 1, 2, 3, 4, 5 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, !ElementsAre( in_a_short ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } not elements are { 1, 2, 3 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a_short, !ElementsAre( in_a1 ) )
+with expansion:
+  { 1, 2, 3 } not elements are { 1, 2, 3, 4, 5 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, !ElementsAre( in_b ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } not elements are { 11, 12, 13, 14, 15 }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Custom predicate
+  Two equal non-empty containers (close enough)
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, ElementsAre( vector_a_plus_1, close_enough ) )
+with expansion:
+  { 1, 2, 3 } elements are { 2, 3, 4 }
+
+-------------------------------------------------------------------------------
+Usage of ElementsAre range matcher
+  Custom predicate
+  Two non-equal non-empty containers (close enough)
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, !ElementsAre( vector_b, close_enough ) )
+with expansion:
+  { 1, 2, 3 } not elements are { 3, 3, 4 }
 
 -------------------------------------------------------------------------------
 Usage of NoneMatch range matcher
@@ -14164,27 +14469,27 @@ with expansion:
   { 1, 2, 3, 4, 5 } none match matches undescribed predicate
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[0] )
+  REQUIRE( mocked.derefed[0] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[1] )
+  REQUIRE( mocked.derefed[1] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[2] )
+  REQUIRE( mocked.derefed[2] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[3] )
+  REQUIRE( mocked.derefed[3] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[4] )
+  REQUIRE( mocked.derefed[4] )
 with expansion:
   true
 
@@ -14202,29 +14507,176 @@ with expansion:
   { 1, 2, 3, 4, 5 } not none match matches undescribed predicate
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE( mocked.m_derefed[0] )
+  REQUIRE( mocked.derefed[0] )
 with expansion:
   true
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[1] )
+  REQUIRE_FALSE( mocked.derefed[1] )
 with expansion:
   !false
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[2] )
+  REQUIRE_FALSE( mocked.derefed[2] )
 with expansion:
   !false
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[3] )
+  REQUIRE_FALSE( mocked.derefed[3] )
 with expansion:
   !false
 
 MatchersRanges.tests.cpp:<line number>: PASSED:
-  REQUIRE_FALSE( mocked.m_derefed[4] )
+  REQUIRE_FALSE( mocked.derefed[4] )
 with expansion:
   !false
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Basic usage
+  Empty container matches empty container
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( empty_vector, UnorderedElementsAre( empty_vector ) )
+with expansion:
+  {  } unordered elements are {  }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Basic usage
+  Empty container does not match non-empty container
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( empty_vector, !UnorderedElementsAre( non_empty_vector ) )
+with expansion:
+  {  } not unordered elements are { 1 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( non_empty_vector, !UnorderedElementsAre( empty_vector ) )
+with expansion:
+  { 1 } not unordered elements are {  }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Basic usage
+  Two equal 1-length non-empty containers
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( non_empty_array, UnorderedElementsAre( non_empty_array ) )
+with expansion:
+  { 1 } unordered elements are { 1 }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Basic usage
+  Two equal-sized, equal, non-empty containers
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_a, UnorderedElementsAre( array_a ) )
+with expansion:
+  { 1, 2, 3 } unordered elements are { 1, 2, 3 }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Basic usage
+  Two equal-sized, non-equal, non-empty containers
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( array_a, !UnorderedElementsAre( array_b ) )
+with expansion:
+  { 1, 2, 3 } not unordered elements are { 2, 2, 3 }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Basic usage
+  Two non-equal-sized, non-empty containers
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, !UnorderedElementsAre( vector_b ) )
+with expansion:
+  { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4 }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Basic usage
+  Can handle type that requires ADL-found free function begin and end
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, UnorderedElementsAre( in_a1 ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } unordered elements are { 1, 2, 3, 4, 5 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, UnorderedElementsAre( in_a2 ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } unordered elements are { 1, 2, 3, 4, 5 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, UnorderedElementsAre( in_a_permuted ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } unordered elements are { 5, 4, 3, 2, 1 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, !UnorderedElementsAre( in_a_short ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } not unordered elements are { 1, 2, 3 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a_short, !UnorderedElementsAre( in_a1 ) )
+with expansion:
+  { 1, 2, 3 } not unordered elements are { 1, 2, 3, 4, 5 }
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( in_a1, !UnorderedElementsAre( in_b ) )
+with expansion:
+  { 1, 2, 3, 4, 5 } not unordered elements are { 6, 2, 3, 4, 5 }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Custom predicate
+  Two equal non-empty containers (close enough)
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, UnorderedElementsAre( vector_a_plus_1, close_enough ) )
+with expansion:
+  { 1, 10, 20 } unordered elements are { 11, 21, 2 }
+
+-------------------------------------------------------------------------------
+Usage of UnorderedElementsAre range matcher
+  Custom predicate
+  Two non-equal non-empty containers (close enough)
+-------------------------------------------------------------------------------
+MatchersRanges.tests.cpp:<line number>
+...............................................................................
+
+MatchersRanges.tests.cpp:<line number>: PASSED:
+  CHECK_THAT( vector_a, !UnorderedElementsAre( vector_b, close_enough ) )
+with expansion:
+  { 1, 10, 21 } not unordered elements are { 11, 21, 3 }
 
 -------------------------------------------------------------------------------
 Usage of the SizeIs range matcher
@@ -16440,15 +16892,6 @@ with expansion:
   "didn|'t" == "didn|'t"
 
 -------------------------------------------------------------------------------
-request an unknown %-starting stream fails
--------------------------------------------------------------------------------
-Stream.tests.cpp:<line number>
-...............................................................................
-
-Stream.tests.cpp:<line number>: PASSED:
-  REQUIRE_THROWS( Catch::makeStream( "%somestream" ) )
-
--------------------------------------------------------------------------------
 resolution
 -------------------------------------------------------------------------------
 InternalBenchmark.tests.cpp:<line number>
@@ -16843,22 +17286,6 @@ with expansion:
   "{ { "green", 55 } }"
   ==
   "{ { "green", 55 } }"
-
--------------------------------------------------------------------------------
-stdout and stderr streams have %-starting name
--------------------------------------------------------------------------------
-Stream.tests.cpp:<line number>
-...............................................................................
-
-Stream.tests.cpp:<line number>: PASSED:
-  REQUIRE( Catch::makeStream( "%stderr" )->isStdout() )
-with expansion:
-  true
-
-Stream.tests.cpp:<line number>: PASSED:
-  REQUIRE( Catch::makeStream( "%stdout" )->isStdout() )
-with expansion:
-  true
 
 -------------------------------------------------------------------------------
 stringify ranges
@@ -17803,6 +18230,6 @@ Misc.tests.cpp:<line number>
 Misc.tests.cpp:<line number>: PASSED:
 
 ===============================================================================
-test cases:  385 |  295 passed |  83 failed |  7 failed as expected
-assertions: 2231 | 2061 passed | 143 failed | 27 failed as expected
+test cases:  387 |  296 passed |  84 failed |  7 failed as expected
+assertions: 2277 | 2104 passed | 146 failed | 27 failed as expected
 

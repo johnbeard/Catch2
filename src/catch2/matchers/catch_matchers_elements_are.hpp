@@ -8,61 +8,124 @@
 #ifndef CATCH_MATCHERS_ELEMENTS_ARE_HPP_INCLUDED
 #define CATCH_MATCHERS_ELEMENTS_ARE_HPP_INCLUDED
 
-#include <catch2/matchers/catch_matchers_templated.hpp>
-
 #include <algorithm>
+#include <catch2/matchers/catch_matchers_templated.hpp>
 #include <utility>
 
 namespace Catch {
-namespace Matchers {
+    namespace Matchers {
 
-    template<typename RangeLike>
-    class ElementsAreElementsMatcher final : public MatcherGenericBase {
-        RangeLike m_range;
-	public:
-		ElementsAreElementsMatcher(RangeLike range):
-		    m_range(std::move(range))
-		{}
+        /**
+         * Matcher for checking that an element contains the same
+         * elements in the same order
+         */
+        template <typename TargetRangeLike, typename Equality>
+        class ElementsAreElementsMatcher final : public MatcherGenericBase {
+            TargetRangeLike m_desired;
+            Equality m_predicate;
 
-		bool match(RangeLike rng) const {
-		    return std::equal(m_range.begin(), m_range.end(), rng.begin());
-		}
+        public:
+            template <typename TargetRangeLike2, typename Equality2>
+            ElementsAreElementsMatcher( TargetRangeLike2&& range,
+                                        Equality2&& predicate ):
+                m_desired( CATCH_FORWARD( range ) ),
+                m_predicate( CATCH_FORWARD( predicate ) ) {}
 
-		std::string describe() const override {
-		    return "elements are " + Catch::Detail::stringify(m_range);
-		}
-    };
+            template <typename RangeLike> bool match( RangeLike&& rng ) const {
+                return std::equal( m_desired.begin(),
+                                   m_desired.end(),
+                                   rng.begin(),
+                                   rng.end(),
+                                   m_predicate );
+            }
 
-    template<typename RangeLike>
-    class UnorderedElementsAreElementsMatcher final : public MatcherGenericBase {
-        RangeLike m_range;
-	public:
-		UnorderedElementsAreElementsMatcher(RangeLike range):
-		    m_range(std::move(range))
-		{}
+            std::string describe() const override {
+                return "elements are " + Catch::Detail::stringify( m_desired );
+            }
+        };
 
-		bool match(RangeLike rng) const {
-		    return std::is_permutation(m_range.begin(), m_range.end(), rng.begin());
-		}
+        /**
+         * Matcher for checking that an element contains the same
+         * elements (but not necessarily in the same order)
+         */
+        template <typename TargetRangeLike, typename Equality>
+        class UnorderedElementsAreElementsMatcher final
+            : public MatcherGenericBase {
+            TargetRangeLike m_desired;
+            Equality m_predicate;
 
-		std::string describe() const override {
-		    return "unordered elements are " + ::Catch::Detail::stringify( m_range );
-		}
-    };
+        public:
+            template <typename TargetRangeLike2, typename Equality2>
+            UnorderedElementsAreElementsMatcher( TargetRangeLike2&& range,
+                                                 Equality2&& predicate ):
+                m_desired( CATCH_FORWARD( range ) ),
+                m_predicate( CATCH_FORWARD( predicate ) ) {}
 
-    //! Creates a matcher that checks if all elements in a range are equal to all elements in another range
-    template<typename RangeLike>
-    ElementsAreElementsMatcher<RangeLike> ElementsAre(RangeLike rng) {
-        return { std::forward<RangeLike>(rng) };
-    }
+            template <typename RangeLike> bool match( RangeLike&& rng ) const {
+                return std::is_permutation( m_desired.begin(),
+                                            m_desired.end(),
+                                            rng.begin(),
+                                            rng.end(),
+                                            m_predicate );
+            }
 
-    //! Creates a matcher that checks if all elements in a range are equal to all elements in another range in some permutation
-    template<typename RangeLike>
-    UnorderedElementsAreElementsMatcher<RangeLike> UnorderedElementsAre(RangeLike rng) {
-        return { std::forward<RangeLike>(rng) };
-    }
+            std::string describe() const override {
+                return "unordered elements are " +
+                       ::Catch::Detail::stringify( m_desired );
+            }
+        };
 
-} // namespace Matchers
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in another range.
+         *
+         * Uses `std::equal_to` to do the comparison
+         */
+        template <typename RangeLike>
+        std::enable_if_t<!Detail::is_matcher<RangeLike>::value,
+                         ElementsAreElementsMatcher<RangeLike, std::equal_to<>>>
+        ElementsAre( RangeLike range ) {
+            return { CATCH_FORWARD( range ), std::equal_to<>{} };
+        }
+
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in another range.
+         *
+         * Uses to provided predicate `eq` to do the comparisons
+         */
+        template <typename RangeLike, typename Equality>
+        ElementsAreElementsMatcher<RangeLike, Equality>
+        ElementsAre( RangeLike&& range, Equality&& predicate ) {
+            return { CATCH_FORWARD( range ), CATCH_FORWARD( predicate ) };
+        }
+
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in another range, in some permutation
+         *
+         * Uses `std::equal_to` to do the comparison
+         */
+        template <typename RangeLike>
+        std::enable_if_t<
+            !Detail::is_matcher<RangeLike>::value,
+            UnorderedElementsAreElementsMatcher<RangeLike, std::equal_to<>>>
+        UnorderedElementsAre( RangeLike range ) {
+            return { CATCH_FORWARD( range ), std::equal_to<>{} };
+        }
+
+        /**
+         * Creates a matcher that checks if all elements in a range are equal
+         * to all elements in another range, in some permuation.
+         *
+         * Uses to provided predicate `eq` to do the comparisons
+         */
+        template <typename RangeLike, typename Equality>
+        UnorderedElementsAreElementsMatcher<RangeLike, Equality>
+        UnorderedElementsAre( RangeLike&& range, Equality&& predicate ) {
+            return { CATCH_FORWARD( range ), CATCH_FORWARD( predicate ) };
+        }
+    } // namespace Matchers
 } // namespace Catch
 
 #endif // CATCH_MATCHERS_ELEMENTS_ARE_HPP_INCLUDED

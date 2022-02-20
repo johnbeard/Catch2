@@ -128,6 +128,7 @@ Nor would this
 :test-result: FAIL Custom std-exceptions can be custom translated
 :test-result: PASS Default scale is invisible to comparison
 :test-result: PASS Directly creating an EnumInfo
+:test-result: FAIL ElementsAre with direct variadic ctor
 :test-result: PASS Empty stream name opens cout stream
 :test-result: PASS Empty tag is not allowed
 :test-result: FAIL EndsWith string matcher
@@ -263,11 +264,14 @@ Message from section two
 :test-result: FAIL Thrown string literals are translated
 :test-result: PASS Tracker
 :test-result: PASS Trim strings
+:test-result: PASS Type conversions of ElementsAre and similar
 :test-result: FAIL Unexpected exceptions can be translated
 :test-result: PASS Upcasting special member functions
 :test-result: PASS Usage of AllMatch range matcher
 :test-result: PASS Usage of AnyMatch range matcher
+:test-result: PASS Usage of ElementsAre range matcher
 :test-result: PASS Usage of NoneMatch range matcher
+:test-result: PASS Usage of UnorderedElementsAre range matcher
 :test-result: PASS Usage of the SizeIs range matcher
 :test-result: PASS Use a custom approx
 :test-result: PASS Variadic macros
@@ -337,7 +341,6 @@ loose text artifact
 :test-result: FAIL prints unscoped info only for the first assertion
 :test-result: PASS random SECTION tests
 :test-result: PASS replaceInPlace
-:test-result: PASS request an unknown %-starting stream fails
 :test-result: PASS resolution
 :test-result: PASS run_for_at_least, chronometer
 :test-result: PASS run_for_at_least, int
@@ -353,7 +356,6 @@ loose text artifact
 :test-result: PASS std::pair<int,std::string> -> toString
 :test-result: PASS std::set is convertible string
 :test-result: PASS std::vector<std::pair<std::string,int> > -> toString
-:test-result: PASS stdout and stderr streams have %-starting name
 :test-result: PASS stringify ranges
 :test-result: PASS stringify( has_maker )
 :test-result: PASS stringify( has_maker_and_operator )
