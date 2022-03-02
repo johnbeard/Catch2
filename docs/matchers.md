@@ -258,10 +258,8 @@ definitions to handle generic range-like types. These are:
 * `SizeIs(Matcher size_matcher)`
 * `Contains(T&& target_element, Comparator = std::equal_to<>{})`
 * `Contains(Matcher element_matcher)`
-* `ElementsAre(const TargetRangeLike&)`
-* `ElementsAre(TargetRangeLike&&)`
-* `UnorderedElementsAre(const TargetRangeLike&)`
-* `UnorderedElementsAre(TargetRangeLike&&)`
+* `ElementsAre(TargetRangeLike&&, Comparator = std::equal_to<>{})`
+* `UnorderedElementsAre(TargetRangeLike&&, Comparator = std::equal_to<>{})`
 
 `IsEmpty` should be self-explanatory. It successfully matches objects
 that are empty according to either `std::empty`, or ADL-found `empty`
@@ -292,6 +290,11 @@ does not matter. For example "1, 2, 3" would match "3, 2, 1". This
 matcher succeeds if `std::is_permuation` returns true. As for
 `ElementsAre`, this uses `operator==` to determine equality.
 
+Both `ElementsAre` and `UnorderedElementsAre` optionally accept a
+predicate which can be used to compare the containers element-wise.
+
+To check a container elementwise against a given matcher, use
+`AllMatch`.
 
 ## Writing custom matchers (old style)
 

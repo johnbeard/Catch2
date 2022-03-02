@@ -92,7 +92,7 @@ namespace Catch {
          * Creates a matcher that checks if all elements in a range are equal
          * to all elements in another range.
          *
-         * Uses to provided predicate `eq` to do the comparisons
+         * Uses to provided predicate `predicate` to do the comparisons
          */
         template <typename RangeLike, typename Equality>
         ElementsAreElementsMatcher<RangeLike, Equality>
@@ -118,7 +118,7 @@ namespace Catch {
          * Creates a matcher that checks if all elements in a range are equal
          * to all elements in another range, in some permuation.
          *
-         * Uses to provided predicate `eq` to do the comparisons
+         * Uses to provided predicate `predicate` to do the comparisons
          */
         template <typename RangeLike, typename Equality>
         UnorderedElementsAreElementsMatcher<RangeLike, Equality>
