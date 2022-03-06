@@ -23,11 +23,6 @@
 #include <vector>
 #include <memory>
 
-#if defined(__cpp_concepts) && __cpp_concepts >= 201907L
-#define CONCEPT_TESTING
-#include <concepts>
-#endif
-
 namespace {
 
 namespace unrelated {
@@ -703,6 +698,18 @@ TEST_CASE( "Usage of UnorderedElementsAre range matcher",
     // are left to the STL implementation
 }
 
+/**
+ * Return true if the type given has a random access iterator type.
+ */
+template <typename Container>
+static constexpr bool ContainerIsRandomAccess( const Container& ) {
+    using array_iter_category = typename std::iterator_traits<
+        typename Container::iterator>::iterator_category;
+
+    return std::is_base_of<std::random_access_iterator_tag,
+                           array_iter_category>::value;
+}
+
 TEST_CASE( "Type conversions of ElementsAre and similar",
            "[matchers][templated][quantifiers]" ) {
     using Catch::Matchers::ElementsAre;
@@ -738,11 +745,9 @@ TEST_CASE( "Type conversions of ElementsAre and similar",
             const std::array<int, 3> array_int_a{ { 1, 2, 3 } };
             const std::list<int> list_char_a{ 1, 2, 3 };
 
-#ifdef CONCEPT_TESTING
             // Verify these types really are different in random access nature
-            static_assert( std::random_access_iterator<decltype(array_int_a)::iterator> );
-            static_assert( !std::random_access_iterator<decltype(list_char_a)::iterator> );
-#endif
+            STATIC_REQUIRE( ContainerIsRandomAccess( array_int_a ) !=
+                            ContainerIsRandomAccess( list_char_a ) );
 
             CHECK_THAT( array_int_a, ElementsAre( list_char_a ) );
             CHECK_THAT( array_int_a, UnorderedElementsAre( list_char_a ) );
@@ -763,7 +768,6 @@ TEST_CASE( "Type conversions of ElementsAre and similar",
             CHECK_THAT( vector_int_a, !UnorderedElementsAre( vector_char_b ) );
         }
     } 
-
 
     SECTION( "Custom predicate" ) {
 
