@@ -607,6 +607,24 @@ TEST_CASE( "Usage of ElementsAre range matcher", "[matchers][templated][quantifi
             const std::vector<int> vector_b{ 1, 2, 3, 4 };
             CHECK_THAT( vector_a, !ElementsAre( vector_b ) );
         }
+        SECTION("Can handle type that requires ADL-found free function begin and end") {
+            unrelated::needs_ADL_begin in_a1( { 1, 2, 3, 4, 5 } );
+            unrelated::needs_ADL_begin in_a2( { 1, 2, 3, 4, 5 } );
+            unrelated::needs_ADL_begin in_a_short{ { 1, 2, 3 } };
+            unrelated::needs_ADL_begin in_b{ { 11, 12, 13, 14, 15 } };
+
+            // Same object
+            CHECK_THAT( in_a1,  ElementsAre( in_a1 ) );
+            // Same content
+            CHECK_THAT( in_a1,  ElementsAre( in_a2 ) );
+
+            // Length different but same elements at front
+            CHECK_THAT( in_a1,  !ElementsAre( in_a_short ) );
+            CHECK_THAT( in_a_short,  !ElementsAre( in_a1 ) );
+
+            // Different elements
+            CHECK_THAT( in_a1,  !ElementsAre( in_b ) );
+        }
     }
 
     SECTION( "Custom predicate" ) {
@@ -671,6 +689,27 @@ TEST_CASE( "Usage of UnorderedElementsAre range matcher",
             const std::vector<int> vector_a{ 1, 2, 3 };
             const std::vector<int> vector_b{ 1, 2, 3, 4 };
             CHECK_THAT( vector_a, !UnorderedElementsAre( vector_b ) );
+        }
+        SECTION("Can handle type that requires ADL-found free function begin and end") {
+            unrelated::needs_ADL_begin in_a1( { 1, 2, 3, 4, 5 } );
+            unrelated::needs_ADL_begin in_a2( { 1, 2, 3, 4, 5 } );
+            unrelated::needs_ADL_begin in_a_permuted( { 5, 4, 3, 2, 1 } );
+            unrelated::needs_ADL_begin in_a_short{ { 1, 2, 3 } };
+            unrelated::needs_ADL_begin in_b{ { 6, 2, 3, 4, 5 } };
+
+            // Same object
+            CHECK_THAT( in_a1,  UnorderedElementsAre( in_a1 ) );
+            // Same content
+            CHECK_THAT( in_a1,  UnorderedElementsAre( in_a2 ) );
+            // Permutation
+            CHECK_THAT( in_a1,  UnorderedElementsAre( in_a_permuted ) );
+
+            // Length different but same elements at front
+            CHECK_THAT( in_a1,  !UnorderedElementsAre( in_a_short ) );
+            CHECK_THAT( in_a_short,  !UnorderedElementsAre( in_a1 ) );
+
+            // Different elements
+            CHECK_THAT( in_a1,  !UnorderedElementsAre( in_b ) );
         }
     }
 

@@ -32,10 +32,10 @@ namespace Catch {
                 m_predicate( CATCH_FORWARD( predicate ) ) {}
 
             template <typename RangeLike> bool match( RangeLike&& rng ) const {
-                return std::equal( m_desired.begin(),
-                                   m_desired.end(),
-                                   rng.begin(),
-                                   rng.end(),
+                return std::equal( begin( m_desired ),
+                                   end( m_desired ),
+                                   begin( rng ),
+                                   end( rng ),
                                    m_predicate );
             }
 
@@ -62,10 +62,10 @@ namespace Catch {
                 m_predicate( CATCH_FORWARD( predicate ) ) {}
 
             template <typename RangeLike> bool match( RangeLike&& rng ) const {
-                return std::is_permutation( m_desired.begin(),
-                                            m_desired.end(),
-                                            rng.begin(),
-                                            rng.end(),
+                return std::is_permutation( begin( m_desired ),
+                                            end( m_desired ),
+                                            begin( rng ),
+                                            end(rng ),
                                             m_predicate );
             }
 
