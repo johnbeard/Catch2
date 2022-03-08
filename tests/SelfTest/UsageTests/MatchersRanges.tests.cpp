@@ -824,3 +824,21 @@ TEST_CASE( "Type conversions of ElementsAre and similar",
         }
     }
 }
+
+
+TEST_CASE( "ElementsAre with direct variadic ctor",
+           "[matchers][templated][quantifiers]" ) {
+    using Catch::Matchers::ElementsAreA;
+
+    SECTION("Basic") {
+
+        const std::vector<int> vector_a{ 1, 2, 3 };
+
+        CHECK_THAT( vector_a, ElementsAreA( 1, 2, 3 ) );
+        CHECK_THAT( vector_a, !ElementsAreA( 1, 2 ) );
+        CHECK_THAT( vector_a, !ElementsAreA( 1, 2, 3, 4 ) );
+
+        CHECK_THAT( vector_a, !ElementsAreA( 1, 2, 4 ) );
+    }
+
+}
